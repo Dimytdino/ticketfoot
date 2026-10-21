@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TicketFoot — Démarrage</title>
+<style>
+:root{
+  --bg:#f7f6f2; --surface:#ffffff; --ink:#1d1d1b; --muted:#5f5e58; --line:#e2e0d8;
+  --accent:#1f6f4a; --accent-soft:#e3f1e9; --warn:#9a5b00; --warn-soft:#fbf0dc;
+  --stop:#a3302a; --stop-soft:#fbe7e5; --code:#f0eee8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161614; --surface:#1f1f1c; --ink:#ecebe6; --muted:#a6a59e; --line:#34332e;
+    --accent:#5cc28f; --accent-soft:#1d3328; --warn:#e3a94a; --warn-soft:#3a2f1a;
+    --stop:#ef8a82; --stop-soft:#3d2321; --code:#2a2a26;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161614; --surface:#1f1f1c; --ink:#ecebe6; --muted:#a6a59e; --line:#34332e;
+  --accent:#5cc28f; --accent-soft:#1d3328; --warn:#e3a94a; --warn-soft:#3a2f1a;
+  --stop:#ef8a82; --stop-soft:#3d2321; --code:#2a2a26;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:32px 16px 80px}
+header{margin-bottom:28px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-size:clamp(28px,5vw,38px);line-height:1.15;margin:6px 0 12px}
+.lead{font-size:18px;color:var(--muted);margin:0}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+nav.toc a{font-size:14px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+nav.toc a:hover{border-color:var(--accent)}
+.progress{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
+.bar>span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.progress small{color:var(--muted)}
+section{margin-top:44px}
+h2{font-size:24px;margin:0 0 6px}
+h2 .tag{font-size:13px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:99px;vertical-align:middle;margin-left:8px}
+.sub{color:var(--muted);margin:0 0 18px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;margin:14px 0;position:relative}
+.step.done{border-color:var(--accent)}
+.step-head{display:flex;gap:12px;align-items:flex-start}
+.num{flex:0 0 32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center}
+.step.done .num{background:var(--accent);color:var(--surface)}
+.step h3{margin:3px 0 0;font-size:18px;flex:1}
+.step-body{margin-left:44px}
+.step-body p{margin:10px 0}
+.prompt{background:var(--code);border-radius:10px;padding:12px 14px;margin:10px 0;display:flex;gap:10px;align-items:flex-start}
+.prompt code{flex:1;font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word}
+button.copy{flex:0 0 auto;font:600 13px system-ui,sans-serif;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
+button.copy:hover{border-color:var(--accent)}
+.check{background:var(--accent-soft);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:15px}
+.check b{color:var(--accent)}
+.fail{background:var(--warn-soft);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:15px}
+.fail b{color:var(--warn)}
+label.tick{display:inline-flex;gap:8px;align-items:center;margin-top:8px;font-size:15px;cursor:pointer;color:var(--muted)}
+label.tick input{width:18px;height:18px;accent-color:var(--accent)}
+.callout{border-left:4px solid var(--stop);background:var(--stop-soft);padding:14px 16px;border-radius:0 12px 12px 0;margin:16px 0}
+.callout h3{margin:0 0 6px;font-size:17px;color:var(--stop)}
+.callout p,.callout ul{margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:15px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+.tablewrap{overflow-x:auto;margin:12px 0}
+code.inline{font:14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);padding:1px 6px;border-radius:5px}
+ul.rules{padding-left:20px}
+ul.rules li{margin:8px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.card h4{margin:0 0 4px;font-size:16px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:14px 0}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+.day b{display:block;color:var(--accent);font-size:13px}
+.day.now{border-color:var(--accent);background:var(--accent-soft)}
+footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px}
+.fill{background:var(--warn-soft);color:var(--warn);padding:0 6px;border-radius:5px;font-weight:600}
+@media (max-width:560px){.step-body{margin-left:0}.prompt{flex-direction:column}button.copy{align-self:flex-end}}
+@media print{nav.toc,.progress,button.copy,label.tick{display:none}.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Formation IA agentique · Exercice TicketFoot</div>
+  <h1>Démarrer seul, pas à pas</h1>
+  <p class="lead">Pendant 10 jours, tu vas concevoir une équipe d'agents IA qui construit un site de billetterie de football. Cette page couvre la mise en route (J0) et ton premier vrai agent (J1). Suis les étapes dans l'ordre et coche chacune une fois le contrôle réussi.</p>
+  <nav class="toc" aria-label="Sommaire">
+    <a href="#principe">Le principe</a>
+    <a href="#j0">J0 — Mise en route</a>
+    <a href="#j1">J1 — Premier agent</a>
+    <a href="#regles">Règles de chaque jour</a>
+    <a href="#aide">Si tu es bloqué</a>
+    <a href="#glossaire">Glossaire</a>
+  </nav>
+  <div class="progress" aria-live="polite">
+    <strong id="progress-label">0 étape terminée sur 0</strong>
+    <div class="bar"><span id="progress-bar"></span></div>
+    <small>Ta progression est mémorisée dans ce navigateur.</small>
+  </div>
+</header>
+
+<section id="principe">
+  <h2>Le principe</h2>
+  <p class="sub">Tu ne codes pas. Tu écris des agents, tu les lances, tu observes, et tu corriges leurs définitions.</p>
+  <div class="grid">
+    <div class="card"><h4>Un agent est un texte</h4><p>Un rôle, un périmètre, des outils autorisés, des entrées, des sorties et une condition d'arrêt. Ton métier de rédacteur est ton meilleur atout.</p></div>
+    <div class="card"><h4>Deux livrables de même poids</h4><p>L'équipe d'agents et le site qu'elle construit. L'un ne compense pas l'autre.</p></div>
+    <div class="card"><h4>Chaque échec est une information</h4><p>Un agent qui dérape révèle un flou dans sa définition. Note-le, puis corrige le texte, jamais le code.</p></div>
+  </div>
+  <div class="days" aria-label="Vue d'ensemble des 10 jours">
+    <div class="day now"><b>J0</b>Mise en route</div>
+    <div class="day now"><b>J1</b>Anatomie d'un agent</div>
+    <div class="day"><b>J2</b>Concevoir l'équipe</div>
+    <div class="day"><b>J3</b>Première exécution</div>
+    <div class="day"><b>J4</b>Déboguer des textes</div>
+    <div class="day"><b>J5</b>Point d'étape et skills</div>
+    <div class="day"><b>J6</b>Le cas dur</div>
+    <div class="day"><b>J7</b>Garde-fous</div>
+    <div class="day"><b>J8</b>Skills et plugin</div>
+    <div class="day"><b>J9</b>Reproductibilité</div>
+    <div class="day"><b>J10</b>Livrer et débriefer</div>
+  </div>
+</section>
+
+<section id="j0">
+  <h2>J0 — Mise en route <span class="tag">une demi-journée</span></h2>
+  <p class="sub">Objectif : vérifier que tout fonctionne avant de commencer le vrai travail.</p>
+
+  <div class="step" data-step="j0-1">
+    <div class="step-head"><div class="num">1</div><h3>Ouvrir une session sur le dépôt</h3></div>
+    <div class="step-body">
+      <p>Ouvre Claude Code avec l'accès qui t'a été fourni, puis sélectionne le dépôt <a href="https://github.com/Dimytdino/ticketfoot" target="_blank" rel="noopener"><code class="inline">Dimytdino/ticketfoot</code></a>.</p>
+      <div class="check"><b>Contrôle :</b> la session affiche les fichiers du dépôt, dont <code class="inline">CLAUDE.md</code>, <code class="inline">README.md</code> et le dossier <code class="inline">docs/</code>.</div>
+      <div class="fail"><b>Si ça échoue :</b> tu n'as probablement pas encore accès au dépôt. Contacte ton référent (voir « Si tu es bloqué »).</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j0-2">
+    <div class="step-head"><div class="num">2</div><h3>Vérifier que Claude a lu le contexte</h3></div>
+    <div class="step-body">
+      <p>Copie cette consigne dans la session :</p>
+      <div class="prompt"><code>Résume en 5 lignes le projet et les règles que tu dois respecter sur ce dépôt.</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> la réponse parle d'un exercice de formation, dit que Claude ne crée pas d'agent de sa propre initiative, et cite la stack (Python, FastAPI, SQLite).</div>
+      <div class="fail"><b>Si ça échoue :</b> la session n'est pas ouverte à la racine du dépôt. Ferme-la et rouvre-la sur le dépôt <code class="inline">ticketfoot</code>.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j0-3">
+    <div class="step-head"><div class="num">3</div><h3>Lancer ton premier agent</h3></div>
+    <div class="step-body">
+      <p>Un agent de test t'attend dans <code class="inline">.claude/agents/verificateur-j0.md</code>. Ouvre-le et lis-le : c'est ton premier exemple d'agent. Puis copie :</p>
+      <div class="prompt"><code>Utilise l'agent verificateur-j0.</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> un fichier <code class="inline">docs/verification-j0.md</code> apparaît, avec le nom du club, le nombre 5 et la phrase « Vérification J0 terminée ».</div>
+      <div class="fail"><b>Si ça échoue :</b> ferme la session, rouvre-la, et relance la consigne. Si l'agent reste introuvable après une deuxième tentative, contacte ton référent.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j0-4">
+    <div class="step-head"><div class="num">4</div><h3>Vérifier les outils techniques</h3></div>
+    <div class="step-body">
+      <p>Tu n'as pas à taper de commande toi-même : demande à Claude de le faire.</p>
+      <div class="prompt"><code>Vérifie que Python 3.12 ou plus est disponible, puis installe Playwright pour Python avec son navigateur Chromium, et dis-moi en une phrase si tout fonctionne. N'écris aucun fichier de code dans le dépôt.</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> Claude confirme la version de Python et l'installation réussie de Playwright.</div>
+      <div class="fail"><b>Si ça échoue :</b> copie le message d'erreur dans ton journal et préviens ton référent. Ce n'est pas bloquant avant le J3 : continue les étapes suivantes.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j0-5">
+    <div class="step-head"><div class="num">5</div><h3>Apprendre les mots de base</h3></div>
+    <div class="step-body">
+      <p>Lis le <a href="#glossaire">glossaire</a> en bas de page. Puis teste-toi :</p>
+      <div class="prompt"><code>Pose-moi 5 questions simples, une par une, pour vérifier que je comprends ce qu'est un commit, un diff, un serveur, une URL et un test de bout en bout. Corrige-moi si je me trompe.</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> tu sais reformuler chaque mot avec tes propres mots.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j0-6">
+    <div class="step-head"><div class="num">6</div><h3>Faire ton premier commit</h3></div>
+    <div class="step-body">
+      <div class="prompt"><code>Fais un commit de l'état actuel avec le message « J0: environment check ».</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> Claude confirme le commit. Demande-lui « Montre-moi l'historique des commits » : tu dois voir le tien.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+</section>
+
+<section id="j1">
+  <h2>J1 — Ton premier vrai agent <span class="tag">une journée</span></h2>
+  <p class="sub">Objectif : comprendre qu'un agent est un contrat écrit, et que chaque flou du contrat se retrouve dans le résultat.</p>
+
+  <div class="step" data-step="j1-1">
+    <div class="step-head"><div class="num">1</div><h3>Lire le brief</h3></div>
+    <div class="step-body">
+      <p>Ouvre <code class="inline">docs/brief.md</code>. Il est volontairement incomplet : repère par toi-même deux ou trois points flous et note-les dans ton journal avant de continuer.</p>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j1-2">
+    <div class="step-head"><div class="num">2</div><h3>Comprendre le gabarit d'agent</h3></div>
+    <div class="step-body">
+      <p>Ouvre <code class="inline">docs/gabarit-agent.md</code>, puis :</p>
+      <div class="prompt"><code>Explique-moi le gabarit docs/gabarit-agent.md rubrique par rubrique. Pour chacune, donne-moi un exemple de mauvaise rédaction et ce qu'elle provoquerait chez l'agent.</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> tu peux expliquer à quoi servent la description, les outils et la condition d'arrêt.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j1-3">
+    <div class="step-head"><div class="num">3</div><h3>Écrire l'agent analyste-spec</h3></div>
+    <div class="step-body">
+      <p>C'est toi qui écris. Claude t'interroge et te critique, il ne rédige pas à ta place.</p>
+      <div class="prompt"><code>Je veux écrire un agent analyste-spec qui transforme docs/brief.md en spécification testable, avec des critères d'acceptation au format Given / When / Then. Ne rédige pas l'agent à ma place : pose-moi les questions nécessaires pour remplir le gabarit, une rubrique à la fois, puis critique ce que j'écris.</code><button class="copy" type="button">Copier</button></div>
+      <p>Une fois toutes les rubriques remplies :</p>
+      <div class="prompt"><code>Enregistre ma définition dans .claude/agents/analyste-spec.md, exactement comme je l'ai écrite.</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> le fichier existe, toutes les rubriques du gabarit sont remplies, et la condition d'arrêt peut être vérifiée par quelqu'un d'autre que toi.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j1-4">
+    <div class="step-head"><div class="num">4</div><h3>Lancer l'agent et lire son travail</h3></div>
+    <div class="step-body">
+      <div class="prompt"><code>Utilise l'agent analyste-spec sur docs/brief.md.</code><button class="copy" type="button">Copier</button></div>
+      <p>Lis ensuite <code class="inline">docs/spec.md</code> et <code class="inline">docs/questions.md</code> (ou les fichiers de sortie que tu as définis).</p>
+      <div class="check"><b>Contrôle :</b> chacune des 5 règles de gestion du brief a au moins un critère Given / When / Then, et l'agent a posé des questions au lieu d'inventer.</div>
+      <div class="fail"><b>Si le résultat ne te convient pas :</b> ne corrige pas le fichier produit. Note la dérive dans le journal, modifie la définition de l'agent, puis relance. Au troisième échec, arrête-toi et réécris la définition en profondeur.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j1-5">
+    <div class="step-head"><div class="num">5</div><h3>Répondre aux questions et prioriser</h3></div>
+    <div class="step-body">
+      <p>Réponds aux questions de l'agent comme le ferait un client : choisis, sans chercher la réponse parfaite. Ensuite :</p>
+      <div class="prompt"><code>Ajoute dans docs/spec.md une priorité Must, Should ou Could pour chaque bloc fonctionnel. Propose une répartition et explique-la, mais c'est moi qui valide.</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> chaque bloc a une priorité. La règle « un siège n'est jamais vendu deux fois » doit être en Must.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+
+  <div class="step" data-step="j1-6">
+    <div class="step-head"><div class="num">6</div><h3>Clore la journée</h3></div>
+    <div class="step-body">
+      <p>Remplis le bilan quotidien dans <code class="inline">docs/journal.md</code> (le modèle est dans le fichier), puis :</p>
+      <div class="prompt"><code>Fais un commit de l'état actuel avec le message « J1: analyste-spec agent and first spec ».</code><button class="copy" type="button">Copier</button></div>
+      <div class="check"><b>Contrôle :</b> le journal contient au moins une dérive et un bilan J1, et le commit apparaît dans l'historique.</div>
+      <label class="tick"><input type="checkbox"> Étape terminée</label>
+    </div>
+  </div>
+</section>
+
+<section id="regles">
+  <h2>Règles de chaque jour</h2>
+  <ul class="rules">
+    <li><b>Tu ne modifies jamais le code toi-même.</b> Si un résultat est faux, tu corriges la définition de l'agent fautif et tu relances.</li>
+    <li><b>Règle des 3 relances.</b> Au troisième échec d'un agent sur la même tâche, arrête de relancer et réécris sa définition.</li>
+    <li><b>Chaque dérive va dans le journal</b>, avant d'être corrigée : c'est la matière du débrief.</li>
+    <li><b>Démo de 10 minutes chaque soir</b>, même si c'est cassé : enregistre ton écran ou écris ce que tu montrerais.</li>
+    <li><b>Un commit chaque soir.</b> C'est ton point de retour si une chaîne d'agents casse le travail de la veille.</li>
+    <li><b>Jamais de vraie carte bancaire, de vraie clé ou de donnée personnelle réelle</b> dans le projet.</li>
+  </ul>
+</section>
+
+<section id="aide">
+  <h2>Si tu es bloqué</h2>
+  <div class="callout">
+    <h3>D'abord, demande à Claude</h3>
+    <p>Décris ce que tu voulais faire, ce qui s'est passé, et colle le message d'erreur s'il y en a un. Exemple :</p>
+    <div class="prompt"><code>J'essayais de [ce que tu voulais faire]. Il s'est passé [ce que tu as vu]. Explique-moi la cause probable en termes simples et ce que je dois faire, sans modifier le code toi-même.</code><button class="copy" type="button">Copier</button></div>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Situation</th><th>Que faire</th></tr></thead>
+      <tbody>
+        <tr><td>Problème d'accès, d'installation ou de quota</td><td>Contacte ton référent technique dans son créneau de déblocage. Ce n'est pas un problème que tu dois résoudre seul.</td></tr>
+        <tr><td>Bloqué plus de 30 minutes sur la même chose</td><td>Note-le dans le journal, passe à l'étape suivante si possible, et contacte ton référent.</td></tr>
+        <tr><td>Un agent fait n'importe quoi</td><td>C'est normal et attendu. Journal, puis correction de sa définition.</td></tr>
+        <tr><td>Claude propose de corriger le code lui-même</td><td>Refuse et demande-lui de t'aider à corriger la définition de l'agent fautif.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Contact</th><th>Pour quoi</th><th>Quand</th></tr></thead>
+      <tbody>
+        <tr><td><span class="fill">[Nom du référent technique]</span></td><td>Accès, installation, quota</td><td><span class="fill">[Créneau quotidien de 30 min]</span></td></tr>
+        <tr><td><span class="fill">[Nom du formateur]</span></td><td>Point d'étape J5, débrief J10</td><td><span class="fill">[Dates]</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="glossaire">
+  <h2>Glossaire</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Mot</th><th>Ce que c'est</th></tr></thead>
+      <tbody>
+        <tr><td><b>Agent</b></td><td>Un assistant spécialisé défini par un fichier texte : un rôle, des droits, une procédure, une condition d'arrêt</td></tr>
+        <tr><td><b>Skill</b></td><td>Un savoir-faire réutilisable que plusieurs agents peuvent charger (à partir du J5)</td></tr>
+        <tr><td><b>CLAUDE.md</b></td><td>Le fichier de contexte que toute session Claude lit en premier sur ce dépôt</td></tr>
+        <tr><td><b>Commit</b></td><td>Une photo du projet à un instant donné, avec un message</td></tr>
+        <tr><td><b>Historique</b></td><td>La suite des commits ; on peut revenir à n'importe lequel</td></tr>
+        <tr><td><b>Diff</b></td><td>Ce qui a changé entre deux photos</td></tr>
+        <tr><td><b>Serveur</b></td><td>Le programme qui fait tourner le site et répond aux demandes</td></tr>
+        <tr><td><b>Client</b></td><td>Le navigateur de l'utilisateur</td></tr>
+        <tr><td><b>URL</b></td><td>L'adresse d'une page ou d'une action, par exemple <code class="inline">/matchs/3</code></td></tr>
+        <tr><td><b>Base de données</b></td><td>L'endroit où sont rangés les matchs, les sièges et les commandes</td></tr>
+        <tr><td><b>Given / When / Then</b></td><td>Format de critère : « Étant donné… quand… alors… ». Il rend une règle vérifiable</td></tr>
+        <tr><td><b>Test de bout en bout</b></td><td>Un robot qui utilise le site comme un humain et vérifie le résultat</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  TicketFoot est un exercice de formation. Le club, le stade et les matchs sont fictifs. Les paiements se font uniquement en mode test.
+</footer>
+
+</div>
+<script>
+(function(){
+  var KEY='ticketfoot-demarrage-v1';
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
+  var steps=[].slice.call(document.querySelectorAll('.step[data-step]'));
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function render(){
+    var done=0;
+    steps.forEach(function(s){
+      var id=s.getAttribute('data-step'),box=s.querySelector('input[type=checkbox]'),on=!!state[id];
+      if(box)box.checked=on;
+      s.classList.toggle('done',on);
+      if(on)done++;
+    });
+    document.getElementById('progress-label').textContent=done+(done>1?' étapes terminées':' étape terminée')+' sur '+steps.length;
+    document.getElementById('progress-bar').style.width=(steps.length?done/steps.length*100:0)+'%';
+  }
+  steps.forEach(function(s){
+    var box=s.querySelector('input[type=checkbox]');
+    if(!box)return;
+    box.addEventListener('change',function(){state[s.getAttribute('data-step')]=box.checked;save();render();});
+  });
+  document.querySelectorAll('button.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var text=btn.parentNode.querySelector('code').textContent;
+      function ok(){btn.textContent='Copié';setTimeout(function(){btn.textContent='Copier';},1500);}
+      function fallback(){
+        var t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';
+        document.body.appendChild(t);t.select();
+        try{document.execCommand('copy');ok();}catch(e){btn.textContent='Sélectionne le texte';}
+        document.body.removeChild(t);
+      }
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok,fallback);}else{fallback();}
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

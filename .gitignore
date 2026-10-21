@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Base de données locale
+*.db
+*.sqlite3
+
+# Billets générés et rapports de test
+billets/
+test-results/
+playwright-report/
