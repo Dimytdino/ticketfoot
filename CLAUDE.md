@@ -12,7 +12,7 @@ Le besoin fonctionnel est décrit dans `docs/brief.md`. C'est la seule source de
 2. **Quand l'apprenant demande de corriger un résultat, aide-le à corriger la définition de l'agent fautif**, pas le code directement. Seuls les agents produisent le code.
 3. **N'invente aucune règle de gestion.** Toute ambiguïté du brief va dans `docs/questions.md`.
 4. **Ne lis jamais `.env`** et n'écris jamais de clé, de mot de passe ou de donnée personnelle réelle dans le dépôt.
-5. **Paiement : Stripe en mode test uniquement.** Aucune clé de production.
+5. **Paiement : simulé uniquement.** Aucun service de paiement externe (Stripe, PayPal ou autre), aucune saisie de numéro de carte.
 6. Les tâches en cours sont suivies dans `docs/taches.md` ; les incidents d'agents dans `docs/journal.md`.
 
 ## Stack imposée
@@ -25,7 +25,7 @@ Le besoin fonctionnel est décrit dans `docs/brief.md`. C'est la seule source de
 | Interface | Templates Jinja2 + HTMX, sans framework JavaScript |
 | Tests unitaires et d'intégration | pytest |
 | Tests de bout en bout | Playwright (Python) |
-| Paiement | Stripe, mode test |
+| Paiement | Simulé dans l'application, sans service externe |
 | Billets | PDF avec QR code |
 
 Ne change pas de stack sans accord écrit du formateur.

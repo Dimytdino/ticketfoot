@@ -87,4 +87,4 @@ Si l'agent n'est pas trouvé, ferme la session, rouvre-la et recommence.
 - **Chaque dérive va dans le journal**, avant d'être corrigée.
 - **Démo de 10 minutes chaque soir**, même si c'est cassé.
 - **Commit chaque soir.**
-- **Jamais de vraie carte bancaire, de vraie clé ou de donnée personnelle réelle.**
+- **Jamais de numéro de carte, de mot de passe ou de donnée personnelle réelle.** Le paiement est simulé.

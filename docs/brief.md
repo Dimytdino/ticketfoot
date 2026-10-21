@@ -11,7 +11,7 @@ Ce brief est volontairement incomplet. Il doit être transformé en spécificati
 | Catalogue | Voir les matchs à venir, la date, l'adversaire, les tribunes et les prix | J3 |
 | Plan du stade | Choisir une tribune puis des sièges précis sur un plan | J4 |
 | Panier et blocage | Bloquer jusqu'à 6 sièges pendant 10 minutes | J6 |
-| Paiement | Payer via Stripe en mode test, jamais en réel | J9 |
+| Paiement | Valider la commande sur un écran de paiement fictif, qui permet de choisir « paiement accepté » ou « paiement refusé » | J9 |
 | Billet | Recevoir un billet PDF avec QR code unique par siège | J9 |
 | Back-office | Créer un match, fixer les prix par tribune, voir les ventes | J9 |
 | Documentation | Guide utilisateur et guide du back-office | J10 |
